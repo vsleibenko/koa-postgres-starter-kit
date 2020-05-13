@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const { sequelize } = require('../db');
+const { sequelize } = require('.');
 
 const User = sequelize.define('user', {
   id: {
@@ -18,7 +18,5 @@ const User = sequelize.define('user', {
     allowNull: false,
   },
 });
-
-sequelize.sync();
 
 module.exports = User;

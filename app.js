@@ -4,35 +4,16 @@ require('dotenv').config();
 // LIBS
 const Koa = require('koa');
 const bodyParser = require('koa-bodyparser');
-const session = require('koa-session');
-const passport = require('koa-passport');
 const cors = require('@koa/cors');
-const { memoryStore } = require('./db');
+const passport = require('./passport');
 
 // ROUTES
 const usersRouter = require('./routes/users');
 
 // APP
 const app = new Koa();
-app.keys = [process.env.SESSION_SECRET_KEY];
-app.use(session({
-  maxAge: 60 * 60 * 1000,
-  rolling: true,
-  renew: true,
-  httpOnly: true,
-  store: memoryStore,
-}, app));
 
-passport.serializeUser(({ email }, done) => {
-  done(null, { email });
-});
-
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
-
-app.use(passport.initialize());
-app.use(passport.session());
+passport(app);
 app.use(bodyParser());
 app.use(cors({
   origin: (ctx) => {

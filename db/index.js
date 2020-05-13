@@ -10,6 +10,7 @@ const sequelize = new Sequelize(process.env.DB_URI, {
 
 sequelize.authenticate()
   .then(() => console.log('DB is connected')) // eslint-disable-line
+  .then(() => sequelize.sync())
   .catch((err) => console.error(err)); // eslint-disable-line
 
 const memoryStore = new MemoryStore();

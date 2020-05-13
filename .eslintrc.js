@@ -6,4 +6,7 @@ module.exports = {
   env: {
     node: true,
   },
+  rules: {
+    "no-param-reassign": 0
+  }
 };
